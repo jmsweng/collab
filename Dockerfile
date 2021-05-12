@@ -11,11 +11,12 @@ RUN cd liblbfgs && \
     make install
 
 RUN git clone https://bitbucket.org/rtaylor/pylbfgs /opt/pylbfgs
+RUN rm /opt/pylbfgs/requirements.txt
+RUN echo "numpy==1.19.5" > /opt/pylbfgs/requirements.txt
 
 RUN virtualenv -p python3.6 --prompt="(pylbfgs) " .venv
 RUN . .venv/bin/activate && \
     python -m pip install jupyterlab matplotlib scipy scikit-image && \
-    python -m pip install numpy --upgrade && \
     cd /opt/pylbfgs && \
     python -m pip install -r requirements.txt && \
     python setup.py install
